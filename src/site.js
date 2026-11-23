@@ -1,3 +1,6 @@
+import { initFieldFeed } from './site-feed.js'
+import { initDemo } from './site-demo.js'
+
 const nav = document.querySelector('#main-nav')
 const toggle = document.querySelector('.menu-toggle')
 const navLinks = [...nav.querySelectorAll('a')]
@@ -83,7 +86,7 @@ function shouldOpen(event, dialog) {
     !event.altKey
   )
 }
-watch.addEventListener('click', (event) => {
+function showTrailer(event, startTime) {
   if (!shouldOpen(event, trailer)) return
   event.preventDefault()
   if (!video.getAttribute('src')) {
@@ -91,11 +94,15 @@ watch.addEventListener('click', (event) => {
     video.src = video.dataset.src
   }
   trailer.showModal()
-  video.currentTime = 0
+  video.currentTime = startTime
   video.play().catch(() => {
-    // Native video controls remain available when autoplay is disabled.
+    // Native controls also work in browsers that require another gesture.
   })
-})
+}
+watch.addEventListener('click', (event) => showTrailer(event, 0))
+document
+  .querySelector('#review-encounter')
+  .addEventListener('click', (event) => showTrailer(event, 17.5))
 trailer.addEventListener('close', () => video.pause())
 
 const gallery = document.querySelector('#location-dialog')
@@ -132,3 +139,22 @@ gallery.addEventListener('keydown', (event) => {
   event.preventDefault()
   showLocation(activeLocation + (event.key === 'ArrowRight' ? 1 : -1))
 })
+
+initFieldFeed()
+initDemo()
+
+const reveal = new IntersectionObserver(
+  (entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue
+      entry.target.classList.add('in-view')
+      reveal.unobserve(entry.target)
+    }
+  },
+  { threshold: 0.12 },
+)
+for (const item of document.querySelectorAll(
+  '.location, .encounter, .guide-note, .entry-inner',
+)) {
+  reveal.observe(item)
+}

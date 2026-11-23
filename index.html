@@ -89,6 +89,29 @@
           <rect x="6.5" y="2.5" width="11" height="19" rx="2" />
           <path d="M11 18h2" />
         </symbol>
+        <symbol id="pause-feed-icon" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            stroke="none"
+            d="M6 4h4v16H6zm8 0h4v16h-4z"
+          />
+        </symbol>
+        <symbol id="speaker-on" viewBox="0 0 24 24">
+          <path
+            d="M3 9h4l5-4v14l-5-4H3zM15 8a5 5 0 0 1 0 8m3-11a9 9 0 0 1 0 14"
+          />
+        </symbol>
+        <symbol id="speaker-off" viewBox="0 0 24 24">
+          <path d="M3 9h4l5-4v14l-5-4H3zM16 9l5 6m0-6-5 6" />
+        </symbol>
+        <symbol id="tuner" viewBox="0 0 24 24">
+          <rect x="2" y="4" width="20" height="14" rx="1" />
+          <path d="M8 21h8m-4-3v3M6 8h7m-7 4h4" />
+          <circle cx="17" cy="11" r="1" />
+        </symbol>
+        <symbol id="rewind-icon" viewBox="0 0 24 24">
+          <path d="m12 6-8 6 8 6zm8 0-8 6 8 6z" />
+        </symbol>
       </defs>
     </svg>
     <header class="masthead">
@@ -107,56 +130,185 @@
           <svg aria-hidden="true"><use href="#menu-icon" /></svg>
         </button>
         <nav id="main-nav" aria-label="Main navigation">
-          <a href="#overview" aria-current="location">Overview</a
-          ><a href="#locations">Locations</a
+          <a href="#overview" aria-current="location">Recordings</a
+          ><a href="#locations">Districts</a
           ><a href="#field-guide">Field guide</a>
         </nav>
         <a class="nav-play" href="./play/"
-          ><svg aria-hidden="true"><use href="#pad" /></svg>Play now</a
+          ><svg aria-hidden="true"><use href="#pad" /></svg>Full game</a
         >
       </div>
     </header>
     <main>
       <section class="hero" id="overview" aria-labelledby="game-title">
-        <img
-          class="hero-art"
-          src="/media/hero.webp"
-          alt=""
-          width="1920"
-          height="1080"
-          fetchpriority="high"
-        />
-        <div class="wrap hero-inner">
-          <div class="hero-copy">
-            <p class="eyebrow hero-kicker">
-              <span class="signal" aria-hidden="true"
-                ><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span
-              >Endless first-person horror
-            </p>
-            <h1 id="game-title">The<br />Backrooms</h1>
-            <p class="lead">
-              The fluorescent lights hum. The carpet muffles your steps.<br
-                class="wide-break"
-              />
-              Then you hear a second pair.
-            </p>
-            <div class="hero-actions">
-              <a class="button primary" href="./play/"
-                ><svg aria-hidden="true"><use href="#pad" /></svg>Play in
-                browser</a
+        <div class="viewfinder" data-channel="lobby" data-transport="still">
+          <img
+            id="feed-poster"
+            class="feed-image"
+            src="/media/feeds/lobby.webp"
+            alt=""
+            fetchpriority="high"
+            width="1280"
+            height="720"
+          />
+          <video
+            id="field-feed"
+            class="feed-image"
+            playsinline
+            muted
+            loop
+            preload="none"
+            aria-hidden="true"
+            tabindex="-1"
+          ></video>
+          <div class="screen-shading" aria-hidden="true"></div>
+          <div class="scanlines" aria-hidden="true"></div>
+          <div class="tracking-band" aria-hidden="true"></div>
+          <div class="screen-frame" aria-hidden="true">
+            <i></i><i></i><i></i><i></i>
+          </div>
+          <div class="wrap screen-inner">
+            <div class="feed-readout">
+              <span class="camera-id"
+                ><i aria-hidden="true"></i><b id="channel-code">CAM 01</b
+                ><span>/</span><span id="channel-name">The Lobby</span></span
               >
-              <a
-                class="button secondary"
-                id="watch-trailer"
-                href="%BASE_URL%media/trailer.mp4"
-                ><svg aria-hidden="true"><use href="#play-icon" /></svg>Watch
-                trailer</a
+              <div class="tape-clock" aria-hidden="true">
+                <span class="tape-transport">SP</span
+                ><time id="feed-clock">00:00:00</time>
+              </div>
+            </div>
+            <div class="hero-copy">
+              <p class="eyebrow hero-kicker">
+                <span class="rule"></span>Found footage horror
+              </p>
+              <h1 id="game-title">
+                <span class="title-the">The</span
+                ><span class="title-name">Backrooms</span>
+              </h1>
+              <p class="lead">
+                Explore an endless maze of fluorescent rooms. Stop walking.<br
+                  class="wide-break"
+                />
+                Listen for the footsteps that keep going.
+              </p>
+              <div class="hero-actions">
+                <a class="button primary" href="./play/" id="launch-demo"
+                  ><svg aria-hidden="true"><use href="#pad" /></svg>Play demo</a
+                >
+                <a
+                  class="button secondary"
+                  id="watch-trailer"
+                  href="%BASE_URL%media/trailer.mp4"
+                  ><svg aria-hidden="true"><use href="#play-icon" /></svg>Watch
+                  trailer</a
+                >
+              </div>
+            </div>
+            <div class="screen-bottom">
+              <div class="feed-progress" aria-hidden="true">
+                <strong id="playback-state">STILL</strong
+                ><span class="tape-track"><i></i></span>
+              </div>
+              <div
+                class="transport-controls"
+                aria-label="Field recording controls"
+                role="group"
               >
+                <button
+                  type="button"
+                  id="toggle-motion"
+                  aria-label="Play footage"
+                  title="Play footage"
+                >
+                  <svg aria-hidden="true"><use href="#play-icon" /></svg>
+                </button>
+                <button
+                  type="button"
+                  id="toggle-audio"
+                  aria-label="Enable ambient sound"
+                  aria-pressed="false"
+                  title="Enable ambient sound"
+                >
+                  <svg aria-hidden="true"><use href="#speaker-off" /></svg
+                  ><span>Sound off</span>
+                </button>
+              </div>
             </div>
           </div>
-          <div class="capture-tag">
-            <span class="capture-cross" aria-hidden="true"></span
-            ><span>In-game capture<strong>The Lobby</strong></span>
+        </div>
+        <div class="tuner-deck">
+          <div class="wrap tuner-inner">
+            <div class="tuner-label">
+              <svg aria-hidden="true"><use href="#tuner" /></svg
+              ><span>Camera feeds</span>
+            </div>
+            <div
+              class="feed-picker"
+              role="group"
+              aria-label="Choose a recorded camera feed"
+            >
+              <button
+                type="button"
+                class="channel"
+                data-feed="lobby"
+                data-code="01"
+                aria-pressed="true"
+                aria-label="Tune to The Lobby"
+              >
+                <img
+                  src="/media/lobby.webp"
+                  alt=""
+                  width="96"
+                  height="60"
+                /><span><small>CH. 01</small><b>The Lobby</b></span>
+              </button>
+              <button
+                type="button"
+                class="channel"
+                data-feed="office"
+                data-code="02"
+                aria-pressed="false"
+                aria-label="Tune to Office Annex"
+              >
+                <img
+                  src="/media/office.webp"
+                  alt=""
+                  width="96"
+                  height="60"
+                /><span><small>CH. 02</small><b>Office Annex</b></span>
+              </button>
+              <button
+                type="button"
+                class="channel"
+                data-feed="maintenance"
+                data-code="03"
+                aria-pressed="false"
+                aria-label="Tune to Maintenance"
+              >
+                <img
+                  src="/media/maintenance.webp"
+                  alt=""
+                  width="96"
+                  height="60"
+                /><span><small>CH. 03</small><b>Maintenance</b></span>
+              </button>
+              <button
+                type="button"
+                class="channel"
+                data-feed="poolrooms"
+                data-code="04"
+                aria-pressed="false"
+                aria-label="Tune to Poolrooms"
+              >
+                <img
+                  src="/media/poolrooms.webp"
+                  alt=""
+                  width="96"
+                  height="60"
+                /><span><small>CH. 04</small><b>Poolrooms</b></span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -168,12 +320,12 @@
         <div class="wrap">
           <div class="section-head">
             <div>
-              <p class="eyebrow"><i class="rule"></i>Environment archive</p>
-              <h2 id="locations-title">Known locations</h2>
+              <p class="eyebrow"><i class="rule"></i>Field photographs</p>
+              <h2 id="locations-title">District index</h2>
             </div>
             <p>
-              Four districts bleed into one endless maze. Every expedition opens
-              a different path through them.
+              Carpet gives way to concrete, then tile. Open a photograph for
+              field notes from each district.
             </p>
           </div>
           <div class="locations-grid">
@@ -298,13 +450,20 @@
               loading="lazy"
               alt="A dark figure stands in a fluorescent corridor."
             />
+            <a
+              class="encounter-review"
+              id="review-encounter"
+              href="%BASE_URL%media/trailer.mp4#t=17.5"
+              ><svg aria-hidden="true"><use href="#rewind-icon" /></svg>Replay
+              encounter</a
+            >
             <figcaption>
               <svg aria-hidden="true"><use href="#tape" /></svg>Encounter
               footage <span>/</span> The Listener
             </figcaption>
           </figure>
           <div class="guide-copy">
-            <p class="eyebrow"><i class="rule"></i>Field guide</p>
+            <p class="eyebrow"><i class="rule"></i>Survival notes</p>
             <h2 id="guide-title">When your footsteps double.</h2>
             <p>
               Stand still. If the footsteps continue, the Listener is close.
@@ -331,7 +490,7 @@
       <section class="section briefing" aria-labelledby="briefing-title">
         <div class="wrap briefing-layout">
           <div>
-            <p class="eyebrow"><i class="rule"></i>Expedition briefing</p>
+            <p class="eyebrow"><i class="rule"></i>Operator manual</p>
             <h2 id="briefing-title">Before you enter</h2>
             <p>
               Play free in a WebGL 2 browser on desktop or mobile. Headphones
@@ -417,6 +576,23 @@
         <a href="https://github.com/nearbycoder/backrooms">GitHub repository</a>
       </div>
     </footer>
+    <dialog id="demo-dialog" aria-labelledby="demo-title">
+      <div class="dialog-bar demo-bar">
+        <h2 id="demo-title">
+          <svg aria-hidden="true"><use href="#tuner" /></svg>Playable feed
+        </h2>
+        <a href="./play/" class="demo-full">Open full game</a>
+        <button
+          class="icon-button"
+          data-close
+          aria-label="Close demo"
+          autofocus
+        >
+          <svg aria-hidden="true"><use href="#close-icon" /></svg>
+        </button>
+      </div>
+      <div id="demo-mount"></div>
+    </dialog>
     <dialog id="trailer-dialog" aria-labelledby="trailer-title">
       <div class="dialog-bar">
         <h2 id="trailer-title">Gameplay trailer</h2>

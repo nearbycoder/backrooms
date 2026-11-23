@@ -7,6 +7,10 @@ import {
   settingsRows,
 } from './settings.js'
 
+const embeddedDemo =
+  window.frameElement?.hasAttribute('data-game-demo') ?? false
+if (embeddedDemo) document.body.dataset.demo = ''
+const quitLabel = embeddedDemo ? 'Exit demo' : 'Return to title'
 const $ = (selector) => document.querySelector(selector)
 const icon = (name) =>
   '<svg aria-hidden="true"><use href="#' + name + '"/></svg>'
@@ -333,7 +337,13 @@ function pauseMenu() {
       recordingSummary(latest) +
       '<div class="panel-actions"><button class="primary" data-action="resume" data-menu-default>' +
       icon('play') +
-      'Resume</button><button class="secondary" data-action="settings">Settings</button><button class="secondary" data-action="controls">Controls</button><button class="secondary" data-action="quit">Return to title</button></div>',
+      'Resume</button><button class="secondary" data-action="settings">Settings</button><button class="secondary" data-action="controls">Controls</button>' +
+      (embeddedDemo
+        ? '<button class="secondary" data-action="again">New expedition</button>'
+        : '') +
+      '<button class="secondary" data-action="quit">' +
+      quitLabel +
+      '</button></div>',
   )
 }
 function resume() {
@@ -364,6 +374,10 @@ function back() {
   } else closePanel()
 }
 function quit() {
+  if (embeddedDemo) {
+    window.parent.postMessage('archive-demo-exit', location.origin)
+    return
+  }
   closePanel()
   screen('title')
   game.reset()
@@ -395,7 +409,9 @@ function lost(run) {
       recordingSummary(run) +
       '<div class="panel-actions"><button class="primary" data-action="again" data-menu-default>' +
       icon('play') +
-      'New expedition</button><button class="secondary" data-action="quit">Return to title</button></div>',
+      'New expedition</button><button class="secondary" data-action="quit">' +
+      quitLabel +
+      '</button></div>',
   )
 }
 function showHud(state) {
@@ -535,6 +551,13 @@ document.addEventListener('keydown', (e) => {
 })
 try {
   game = createGame($('#scene'), {
+    preloadExpedition: embeddedDemo,
+    onReady() {
+      if (!embeddedDemo) return
+      start()
+      if (document.hasFocus()) $('#scene').focus({ preventScroll: true })
+      window.parent.postMessage('archive-demo-ready', location.origin)
+    },
     onHud: showHud,
     onPause: pauseMenu,
     onLost: lost,
@@ -556,6 +579,17 @@ try {
   $('#load-error').textContent =
     'The 3D view needs WebGL 2. Enable hardware acceleration in your browser and reload.'
   $('#system-status').textContent = 'FEED OFFLINE'
+  if (embeddedDemo)
+    window.parent.postMessage('archive-demo-ready', location.origin)
+}
+if (embeddedDemo) {
+  function disposeDemo() {
+    game?.dispose()
+    game = undefined
+    clearTimeout(soundFeedbackTimer)
+  }
+  document.addEventListener('archive-demo-dispose', disposeDemo, { once: true })
+  window.addEventListener('pagehide', disposeDemo, { once: true })
 }
 $('#begin-label').textContent = 'Enter level'
 $('#settings').disabled = false

@@ -39,6 +39,7 @@ export function createGame(
     onInputMode,
     onMenuBack,
     onControllerChange,
+    preloadExpedition = false,
   } = {},
 ) {
   const renderer = new THREE.WebGLRenderer({
@@ -51,7 +52,14 @@ export function createGame(
   renderer.shadowMap.type = THREE.PCFShadowMap
   const optics = createCameraFinish(renderer)
   const scene = new THREE.Scene()
-  let world = createWorld(scene, renderer)
+  let previousSeed = 0
+  function nextSeed() {
+    const [random] = window.crypto.getRandomValues(new Uint32Array(1))
+    previousSeed = random === previousSeed ? (random + 1) >>> 0 : random
+    return previousSeed
+  }
+  let prepared = preloadExpedition
+  let world = createWorld(scene, renderer, prepared ? { seed: nextSeed() } : {})
   let baseFov = world.spawn.fov ?? 64
   const camera = new THREE.PerspectiveCamera(baseFov, 1, 0.055, 160)
   camera.rotation.order = 'YXZ'
@@ -73,9 +81,8 @@ export function createGame(
   const torch = createFlashlightView(flashlight)
   const audio = createAudio()
   const trail = createTrail(scene)
-  let apparition = null
+  let apparition = prepared ? createApparition(scene, world, audio) : null
   let distance = 0
-  let previousSeed = 0
   let motionOverride
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
   const held = new Set()
@@ -190,12 +197,13 @@ export function createGame(
     if (document.pointerLockElement === canvas) document.exitPointerLock?.()
   }
 
-  function begin() {
+  function begin(captureMouse = true) {
     clearInput()
     mode = 'playing'
     previousTime = performance.now()
     audio.play()
     if (
+      captureMouse &&
       inputMode !== 'gamepad' &&
       !window.matchMedia('(pointer: coarse)').matches
     )
@@ -231,12 +239,15 @@ export function createGame(
   }
 
   function start() {
-    const random = new Uint32Array(1)
-    window.crypto.getRandomValues(random)
-    const seed = random[0] === previousSeed ? (random[0] + 1) >>> 0 : random[0]
-    previousSeed = seed
-    resetRun(seed)
-    begin()
+    if (prepared) {
+      prepared = false
+      // The iframe was loaded by a click in the parent. Pointer capture is
+      // available on the first click inside this browsing context.
+      begin(false)
+    } else {
+      resetRun(nextSeed())
+      begin()
+    }
   }
 
   function pause() {
@@ -488,9 +499,9 @@ export function createGame(
     } else {
       if (event.button !== 0 || document.pointerLockElement === canvas) return
       drag = { id: event.pointerId, x: event.clientX, y: event.clientY }
-      requestLook()
     }
     canvas.setPointerCapture(event.pointerId)
+    if (event.pointerType !== 'touch') requestLook()
   })
   listener(canvas, 'pointermove', (event) => {
     if (mode !== 'playing') return
@@ -622,6 +633,7 @@ export function createGame(
       torch.dispose()
       optics.dispose()
       renderer.dispose()
+      if (preloadExpedition) renderer.forceContextLoss()
     },
   }
 }

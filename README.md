@@ -4,6 +4,8 @@
 
 An endless first-person exploration game built with Three.js and Kenney’s Retro Textures Liminal pack. Each recording starts in the familiar yellow Lobby. Beyond it, connected rooms lead into blue offices, concrete service passages, and tiled Poolrooms. Look for changes in the floor finish and listen to how your footsteps change as you cross a threshold.
 
+On the homepage, tune between four recordings captured in the game. Each opens muted with optional ambient sound. Select **Play demo** to start a playable expedition on the page, or **Full game** for the standalone view.
+
 The maze streams around you as you walk. Each expedition has a new seed. Retracing your steps within an expedition brings back the same rooms and landmarks. The compass, maximum range, and numbered strips of floor tape help you keep your bearings. Pause to check which areas you’ve recorded.
 
 A second set of footsteps means something may be closing in. Shine your flashlight directly at the figure, outrun it, or turn a corner and stay out of sight. If it catches you, the recording ends and you can begin a new expedition.

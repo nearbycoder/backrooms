@@ -1233,3 +1233,10 @@ body[data-input='gamepad'] .control-hint .touch-tip {
     margin-block: auto;
   }
 }
+
+/* The host dialog supplies the frame and navigation for the inline expedition. */
+body[data-demo] .topbar,
+body[data-demo] footer,
+body[data-demo] .title-screen {
+  display: none;
+}

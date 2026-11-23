@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#10110e" />
+    <meta
+      name="description"
+      content="Play The Backrooms, a free, endless first-person horror game in your browser. Explore four shifting districts, mark your path, and listen for footsteps."
+    />
+    <link rel="canonical" href="https://nearbycoder.github.io/backrooms/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Backrooms | Liminal Archive" />
+    <meta
+      property="og:description"
+      content="An endless first-person horror game. The fluorescent lights hum. The carpet muffles your steps. Then you hear a second pair. Play free in your browser."
+    />
+    <meta
+      property="og:image"
+      content="https://nearbycoder.github.io/backrooms/media/social.jpg"
+    />
+    <meta
+      property="og:image:alt"
+      content="The Backrooms, an endless first-person horror game by nearbycoder"
+    />
+    <meta
+      property="og:url"
+      content="https://nearbycoder.github.io/backrooms/"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>The Backrooms | Liminal Archive</title>
+    <link rel="icon" href="/mark.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/barlow-condensed-extrabold.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/src/site.css" />
+  </head>
+  <body>
+    <a class="skip" href="#overview">Skip to content</a>
+    <svg class="symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <symbol id="brand-mark" viewBox="0 0 32 32">
+          <path
+            fill="currentColor"
+            stroke="none"
+            d="M2 28V5l12-3v5L6 9v19zm8 0V11l12-3v5l-8 2v13zm8 0V17l12-3v14h-4v-8l-4 1v7z"
+          />
+        </symbol>
+        <symbol id="pad" viewBox="0 0 24 24">
+          <path
+            d="M7.4 6.7h9.2c2.2 0 3.7 1.8 4.2 4.2l.9 4.5c.5 2.9-1.5 4.8-3.8 2.6l-2.5-2.5H8.6L6.1 18c-2.2 2.2-4.4.3-3.8-2.6l.9-4.5c.5-2.4 2-4.2 4.2-4.2Z"
+          />
+          <path d="M7.9 9.3v4.2m-2.1-2.1H10m5.9.6h.1m1.9-2h.1" />
+        </symbol>
+        <symbol id="play-icon" viewBox="0 0 24 24">
+          <path d="m7 4 13 8-13 8z" />
+        </symbol>
+        <symbol id="tape" viewBox="0 0 24 24">
+          <rect x="2" y="5" width="20" height="14" rx="1.6" />
+          <circle cx="7" cy="10.4" r="2" />
+          <circle cx="17" cy="10.4" r="2" />
+          <path d="M7 12.4h10M6 19l2-3h8l2 3" />
+        </symbol>
+        <symbol id="close-icon" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </symbol>
+        <symbol id="menu-icon" viewBox="0 0 24 24">
+          <path d="M3 7h18M3 12h18M3 17h18" />
+        </symbol>
+        <symbol id="expand" viewBox="0 0 24 24">
+          <path d="M3.5 9V3.5H9m6 0h5.5V9m0 6v5.5H15m-6 0H3.5V15" />
+        </symbol>
+        <symbol id="headphones" viewBox="0 0 24 24">
+          <path d="M4 15v-3a8 8 0 0 1 16 0v3" />
+          <rect x="3" y="12" width="4.7" height="8" rx="1.5" />
+          <rect x="16.3" y="12" width="4.7" height="8" rx="1.5" />
+        </symbol>
+        <symbol id="keys" viewBox="0 0 24 24">
+          <rect x="2" y="5.5" width="20" height="13" rx="1.5" />
+          <path
+            d="M5 9h1m2 0h1m2 0h1m2 0h1m2 0h2M5 12h1m2 0h1m2 0h1m2 0h1m2 0h2M8 15h8"
+          />
+        </symbol>
+        <symbol id="touch" viewBox="0 0 24 24">
+          <rect x="6.5" y="2.5" width="11" height="19" rx="2" />
+          <path d="M11 18h2" />
+        </symbol>
+      </defs>
+    </svg>
+    <header class="masthead">
+      <div class="wrap masthead-inner">
+        <a href="#overview" class="brand" aria-label="Liminal Archive home"
+          ><svg aria-hidden="true"><use href="#brand-mark" /></svg
+          ><span>LIMINAL <span>ARCHIVE</span></span></a
+        >
+        <button
+          type="button"
+          class="menu-toggle icon-button"
+          aria-label="Open navigation"
+          aria-expanded="false"
+          aria-controls="main-nav"
+        >
+          <svg aria-hidden="true"><use href="#menu-icon" /></svg>
+        </button>
+        <nav id="main-nav" aria-label="Main navigation">
+          <a href="#overview" aria-current="location">Overview</a
+          ><a href="#locations">Locations</a
+          ><a href="#field-guide">Field guide</a>
+        </nav>
+        <a class="nav-play" href="./play/"
+          ><svg aria-hidden="true"><use href="#pad" /></svg>Play now</a
+        >
+      </div>
+    </header>
+    <main>
+      <section class="hero" id="overview" aria-labelledby="game-title">
+        <img
+          class="hero-art"
+          src="/media/hero.webp"
+          alt=""
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+        />
+        <div class="wrap hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow hero-kicker">
+              <span class="signal" aria-hidden="true"
+                ><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span
+              >Endless first-person horror
+            </p>
+            <h1 id="game-title">The<br />Backrooms</h1>
+            <p class="lead">
+              The fluorescent lights hum. The carpet muffles your steps.<br
+                class="wide-break"
+              />
+              Then you hear a second pair.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="./play/"
+                ><svg aria-hidden="true"><use href="#pad" /></svg>Play in
+                browser</a
+              >
+              <a
+                class="button secondary"
+                id="watch-trailer"
+                href="%BASE_URL%media/trailer.mp4"
+                ><svg aria-hidden="true"><use href="#play-icon" /></svg>Watch
+                trailer</a
+              >
+            </div>
+          </div>
+          <div class="capture-tag">
+            <span class="capture-cross" aria-hidden="true"></span
+            ><span>In-game capture<strong>The Lobby</strong></span>
+          </div>
+        </div>
+      </section>
+      <section
+        class="archive section"
+        id="locations"
+        aria-labelledby="locations-title"
+      >
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow"><i class="rule"></i>Environment archive</p>
+              <h2 id="locations-title">Known locations</h2>
+            </div>
+            <p>
+              Four districts bleed into one endless maze. Every expedition opens
+              a different path through them.
+            </p>
+          </div>
+          <div class="locations-grid">
+            <article class="location">
+              <a
+                class="location-link"
+                href="%BASE_URL%media/lobby.webp"
+                aria-label="View The Lobby field notes"
+              >
+                <div class="location-photo">
+                  <img
+                    src="/media/lobby.webp"
+                    width="1200"
+                    height="750"
+                    loading="lazy"
+                    alt="Fluorescent ceiling lights over a maze of yellow wallpaper and worn carpet."
+                  /><span class="photo-expand"
+                    ><svg aria-hidden="true"><use href="#expand" /></svg
+                  ></span>
+                </div>
+                <h3>The Lobby</h3>
+                <p>Yellow wallpaper &amp; tired fluorescents</p>
+              </a>
+              <p class="observation" hidden>
+                Every recording begins here. The same wallpaper wraps around
+                corner after corner. Leave a strip of tape on the carpet before
+                you turn.
+              </p>
+            </article>
+            <article class="location">
+              <a
+                class="location-link"
+                href="%BASE_URL%media/office.webp"
+                aria-label="View Office Annex field notes"
+              >
+                <div class="location-photo">
+                  <img
+                    src="/media/office.webp"
+                    width="1200"
+                    height="750"
+                    loading="lazy"
+                    alt="Blue office partitions and corridors with red carpeting."
+                  /><span class="photo-expand"
+                    ><svg aria-hidden="true"><use href="#expand" /></svg
+                  ></span>
+                </div>
+                <h3>Office Annex</h3>
+                <p>Blue partitions &amp; faded red carpet</p>
+              </a>
+              <p class="observation" hidden>
+                Blue striped walls take over where the yellow paper ends. A
+                glimpse of red carpet through a doorway can tell you where you
+                are before the compass does.
+              </p>
+            </article>
+            <article class="location">
+              <a
+                class="location-link"
+                href="%BASE_URL%media/maintenance.webp"
+                aria-label="View Maintenance field notes"
+              >
+                <div class="location-photo">
+                  <img
+                    src="/media/maintenance.webp"
+                    width="1200"
+                    height="750"
+                    loading="lazy"
+                    alt="Bare concrete corridors in the maintenance district."
+                  /><span class="photo-expand"
+                    ><svg aria-hidden="true"><use href="#expand" /></svg
+                  ></span>
+                </div>
+                <h3>Maintenance</h3>
+                <p>Service pipes &amp; bare concrete</p>
+              </a>
+              <p class="observation" hidden>
+                The carpet gives way to concrete. Exposed pipes run along the
+                service passages, and each footfall comes back sharper. Stop
+                walking and listen again.
+              </p>
+            </article>
+            <article class="location">
+              <a
+                class="location-link"
+                href="%BASE_URL%media/poolrooms.webp"
+                aria-label="View Poolrooms field notes"
+              >
+                <div class="location-photo">
+                  <img
+                    src="/media/poolrooms.webp"
+                    width="1200"
+                    height="750"
+                    loading="lazy"
+                    alt="Pale tiled passages in the Poolrooms."
+                  /><span class="photo-expand"
+                    ><svg aria-hidden="true"><use href="#expand" /></svg
+                  ></span>
+                </div>
+                <h3>Poolrooms</h3>
+                <p>Pale tiles &amp; shallow basins</p>
+              </a>
+              <p class="observation" hidden>
+                Small tiles climb from floor to ceiling. In some rooms,
+                fluorescent light catches the ripples in a shallow basin. Take a
+                compass bearing before crossing the tile.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section
+        id="field-guide"
+        class="guide section"
+        aria-labelledby="guide-title"
+      >
+        <div class="wrap guide-layout">
+          <figure class="encounter">
+            <img
+              src="/media/listener.webp"
+              width="1440"
+              height="900"
+              loading="lazy"
+              alt="A dark figure stands in a fluorescent corridor."
+            />
+            <figcaption>
+              <svg aria-hidden="true"><use href="#tape" /></svg>Encounter
+              footage <span>/</span> The Listener
+            </figcaption>
+          </figure>
+          <div class="guide-copy">
+            <p class="eyebrow"><i class="rule"></i>Field guide</p>
+            <h2 id="guide-title">When your footsteps double.</h2>
+            <p>
+              Stand still. If the footsteps continue, the Listener is close.
+              Turn your flashlight on it to make it recoil, or break its line of
+              sight around a corner.
+            </p>
+            <div class="guide-note">
+              <h3>Leave a trail</h3>
+              <p>
+                Drop numbered tape at junctions. Rooms stay put within a
+                recording, so your marks can lead you back.
+              </p>
+            </div>
+            <div class="guide-note">
+              <h3>Save your sprint</h3>
+              <p>
+                A full stamina bar buys about ten seconds at a run. Keep some in
+                reserve for the sound behind you.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section briefing" aria-labelledby="briefing-title">
+        <div class="wrap briefing-layout">
+          <div>
+            <p class="eyebrow"><i class="rule"></i>Expedition briefing</p>
+            <h2 id="briefing-title">Before you enter</h2>
+            <p>
+              Play free in a WebGL 2 browser on desktop or mobile. Headphones
+              help you hear approaching footsteps.
+            </p>
+          </div>
+          <div class="questions">
+            <details>
+              <summary>
+                <svg aria-hidden="true"><use href="#keys" /></svg>Keyboard &amp;
+                mouse<span></span>
+              </summary>
+              <p>
+                Move with <kbd>WASD</kbd>, look with the mouse, and hold
+                <kbd>Shift</kbd> to sprint. Press <kbd>F</kbd> for the
+                flashlight, <kbd>E</kbd> to leave a tape marker, and
+                <kbd>Esc</kbd> to pause.
+              </p>
+            </details>
+            <details>
+              <summary>
+                <svg aria-hidden="true"><use href="#pad" /></svg>Controller<span
+                ></span>
+              </summary>
+              <p>
+                Press a button to connect. Use the left stick to move and the
+                right stick to look. Hold LB / L1 to sprint. Y / Triangle
+                toggles the flashlight, X / Square drops tape, and Menu /
+                Options pauses.
+              </p>
+            </details>
+            <details>
+              <summary>
+                <svg aria-hidden="true"><use href="#touch" /></svg
+                >Touchscreen<span></span>
+              </summary>
+              <p>
+                Drag on the left to walk and on the right to look. Hold Run to
+                sprint. Tap Light or Mark to use your equipment, or tap the
+                pause icon to open the menu.
+              </p>
+            </details>
+            <details>
+              <summary>
+                <svg aria-hidden="true"><use href="#headphones" /></svg>Audio
+                &amp; display settings<span></span>
+              </summary>
+              <p>
+                Open Settings from the title screen or pause menu. Adjust the
+                ambience and effects mix, brightness, field of view, bloom, film
+                grain, and camera motion. Your choices are saved in this
+                browser.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+      <section class="entry" aria-labelledby="entry-title">
+        <div class="wrap entry-inner">
+          <div>
+            <p class="eyebrow">
+              <svg aria-hidden="true"><use href="#tape" /></svg>Liminal Archive
+            </p>
+            <h2 id="entry-title">Start a new recording.</h2>
+          </div>
+          <a class="button primary" href="./play/"
+            ><svg aria-hidden="true"><use href="#pad" /></svg>Play in browser</a
+          >
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="wrap footer-inner">
+        <a href="#overview" class="brand" aria-label="Liminal Archive home"
+          ><svg aria-hidden="true"><use href="#brand-mark" /></svg
+          ><span>LIMINAL <span>ARCHIVE</span></span></a
+        >
+        <p>
+          A game by <a href="https://github.com/nearbycoder">nearbycoder</a
+          ><span aria-hidden="true"> / </span>Textures by
+          <a href="https://kenney.nl/assets/retro-textures-liminal">Kenney</a>
+        </p>
+        <a href="https://github.com/nearbycoder/backrooms">GitHub repository</a>
+      </div>
+    </footer>
+    <dialog id="trailer-dialog" aria-labelledby="trailer-title">
+      <div class="dialog-bar">
+        <h2 id="trailer-title">Gameplay trailer</h2>
+        <button
+          class="icon-button"
+          data-close
+          aria-label="Close trailer"
+          autofocus
+        >
+          <svg aria-hidden="true"><use href="#close-icon" /></svg>
+        </button>
+      </div>
+      <video
+        controls
+        playsinline
+        preload="none"
+        data-src="%BASE_URL%media/trailer.mp4"
+        data-poster="%BASE_URL%media/trailer-poster.webp"
+      >
+        <track
+          kind="captions"
+          src="/media/trailer.en.vtt"
+          srclang="en"
+          label="English"
+        />
+      </video>
+    </dialog>
+    <dialog id="location-dialog" aria-labelledby="location-title">
+      <div class="dialog-bar">
+        <span class="eyebrow">Environment archive</span
+        ><button
+          class="icon-button"
+          data-close
+          aria-label="Close field notes"
+          autofocus
+        >
+          <svg aria-hidden="true"><use href="#close-icon" /></svg>
+        </button>
+      </div>
+      <img id="location-image" width="1200" height="750" alt="" />
+      <div class="dialog-details" aria-live="polite">
+        <h2 id="location-title"></h2>
+        <p id="location-description"></p>
+        <div class="gallery-controls">
+          <button type="button" id="previous">Previous location</button
+          ><button type="button" id="next">Next location</button>
+        </div>
+      </div>
+    </dialog>
+    <script type="module" src="/src/site.js"></script>
+  </body>
+</html>

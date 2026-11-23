@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#10120f" />
+    <title>The Backrooms | Liminal Archive</title>
+    <link rel="icon" href="/mark.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/barlow-condensed-extrabold.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link rel="stylesheet" href="../src/style.css" />
+  </head>
+  <body data-mode="title">
+    <svg class="symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <symbol id="logo" viewBox="0 0 32 32">
+          <path
+            fill="currentColor"
+            stroke="none"
+            fill-rule="evenodd"
+            d="M2 28V5l12-3v5L6 9v19zm8 0V11l12-3v5l-8 2v13zm8 0V17l12-3v14h-4v-8l-4 1v7z"
+          />
+        </symbol>
+        <symbol id="sound" viewBox="0 0 24 24">
+          <path
+            d="M3 10h4l5-4v12l-5-4H3zM15 9a4 4 0 0 1 0 6m3-9a8 8 0 0 1 0 12"
+          />
+        </symbol>
+        <symbol id="muted" viewBox="0 0 24 24">
+          <path d="M3 10h4l5-4v12l-5-4H3zM16 9l6 6m0-6-6 6" />
+        </symbol>
+        <symbol id="expand" viewBox="0 0 24 24">
+          <path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5" />
+        </symbol>
+        <symbol id="collapse" viewBox="0 0 24 24">
+          <path d="M9 3v6H3m12-6v6h6m0 6h-6v6M9 21v-6H3" />
+        </symbol>
+        <symbol id="play" viewBox="0 0 24 24">
+          <path fill="currentColor" stroke="none" d="m6 3 15 9-15 9z" />
+        </symbol>
+        <symbol id="adjust" viewBox="0 0 24 24">
+          <path d="M3 6h8m5 0h5M3 12h2m5 0h11M3 18h10m5 0h3" />
+          <circle cx="13.5" cy="6" r="2.5" />
+          <circle cx="7.5" cy="12" r="2.5" />
+          <circle cx="15.5" cy="18" r="2.5" />
+        </symbol>
+        <symbol id="display" viewBox="0 0 24 24">
+          <rect x="2.5" y="4" width="19" height="13" rx="1.5" />
+          <path d="M12 17v3m-4 0h8" />
+        </symbol>
+        <symbol id="pad" viewBox="0 0 24 24">
+          <path
+            d="M7 6h10c2 0 3 2 3.6 4l1 5c.6 3.1-1.7 4.6-3.7 2.4L15.7 15H8.3l-2.2 2.4C4 19.6 1.8 18.1 2.4 15l1-5C4 8 5 6 7 6Z"
+          />
+          <path d="M7.4 9v4m-2-2h4m6.4-.3h.1m2-1.8h.1" />
+        </symbol>
+        <symbol id="reset-icon" viewBox="0 0 24 24">
+          <path d="M4 10a8 8 0 1 1 1 7M4 5v5h5" />
+        </symbol>
+        <symbol id="keys" viewBox="0 0 24 24">
+          <rect x="2" y="5.5" width="20" height="13" rx="1.5" />
+          <path
+            d="M5 9h1m2 0h1m2 0h1m2 0h1m2 0h2M5 12h1m2 0h1m2 0h1m2 0h1m2 0h2M8 15h8"
+          />
+        </symbol>
+        <symbol id="cassette" viewBox="0 0 24 24">
+          <rect x="2" y="5" width="20" height="14" rx="1.5" />
+          <circle cx="7" cy="10.5" r="2" />
+          <circle cx="17" cy="10.5" r="2" />
+          <path d="M7 12.5h10M6 19l2-3h8l2 3" />
+        </symbol>
+        <symbol id="enter" viewBox="0 0 24 24">
+          <path d="M19 5v9H5m5-5-5 5 5 5" />
+        </symbol>
+        <symbol id="cross" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M6 18 18 6" />
+        </symbol>
+        <symbol id="pause-icon" viewBox="0 0 24 24">
+          <path stroke-width="4" d="M8 5v14M16 5v14" />
+        </symbol>
+      </defs>
+    </svg>
+    <header class="topbar">
+      <a class="brand" href="../" aria-label="Liminal Archive homepage">
+        <svg class="brand-mark"><use href="#logo" /></svg
+        ><span>LIMINAL<span class="brand-light"> ARCHIVE</span></span>
+      </a>
+      <div class="toolbar">
+        <button
+          id="audio-button"
+          class="tool"
+          aria-label="Mute audio"
+          aria-pressed="true"
+        >
+          <svg><use href="#sound" /></svg><span>AUDIO ON</span>
+        </button>
+        <i class="tool-divider"></i>
+        <button
+          id="fullscreen-button"
+          class="tool icon-only"
+          aria-label="Enter fullscreen"
+          title="Fullscreen"
+        >
+          <svg><use href="#expand" /></svg>
+        </button>
+      </div>
+    </header>
+    <main id="view">
+      <canvas
+        id="scene"
+        aria-label="First-person view of the Backrooms"
+      ></canvas>
+      <div class="shade"></div>
+      <div class="film"></div>
+      <div class="framing" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="rec-overlay">
+        <span class="rec-dot"></span><b>REC</b
+        ><time id="timecode">00:00:00</time>
+      </div>
+      <div class="camera-id">
+        CAM_01 <i class="battery"><i></i><i></i><i></i></i>
+      </div>
+      <section id="title-screen" class="title-screen">
+        <div class="level-label"><i></i>LEVEL 00 <span>/</span> THE LOBBY</div>
+        <h1>THE<br />BACKROOMS</h1>
+        <p class="intro">
+          Beyond the Lobby, the rooms go on forever.<br class="desktop-break" />
+          Mark your path. Listen for footsteps that aren’t yours.
+        </p>
+        <div class="actions">
+          <button id="begin" class="primary" data-menu-default>
+            <svg><use href="#play" /></svg>Enter level
+          </button>
+          <button id="settings" class="secondary">
+            <svg><use href="#adjust" /></svg>Settings
+          </button>
+          <button id="controls" class="guide-link">
+            <svg><use href="#keys" /></svg>Controls
+          </button>
+        </div>
+      </section>
+      <div class="monitor-audio" aria-hidden="true">
+        <span>CH1</span>
+        <div class="meter"></div>
+      </div>
+      <div class="tape">
+        <svg><use href="#cassette" /></svg><span id="tape-number">TAPE 001</span
+        ><span class="tape-sep">/</span>SP
+      </div>
+      <section id="hud" hidden aria-label="Game status">
+        <div class="location">
+          <span class="hud-label">LOCATION</span>
+          <strong id="area-name">The Lobby</strong>
+          <span class="navigation"
+            ><b id="heading" aria-label="Compass heading">N</b><i></i
+            ><span id="range">0 m</span> MAX RANGE</span
+          >
+        </div>
+        <div class="reticle"></div>
+        <div class="control-hint" id="control-hint">
+          <kbd>WASD</kbd><span>Move</span><kbd>Mouse</kbd><span>Look</span
+          ><kbd>Shift</kbd><span>Sprint</span
+          ><span class="touch-tip"
+            >Drag to move or look · Hold Run to sprint</span
+          >
+        </div>
+        <div id="field-message" role="status" hidden></div>
+        <div class="player-status">
+          <span id="lamp">LIGHT OFF</span><i></i><span>STAMINA</span
+          ><meter id="stamina" min="0" max="1" value="1"></meter>
+        </div>
+        <button id="pause" class="pause" aria-label="Pause exploration">
+          <svg><use href="#pause-icon" /></svg>
+        </button>
+        <div class="touch-actions">
+          <button id="run">Run</button><button id="light">Light</button
+          ><button id="mark">Mark</button>
+        </div>
+      </section>
+      <div id="modal-layer" hidden>
+        <section
+          class="panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="panel-title"
+          tabindex="-1"
+        ></section>
+      </div>
+      <div id="load-error" hidden></div>
+    </main>
+    <footer>
+      <div>
+        <span class="status-dot"></span
+        ><span id="system-status">SYSTEM ONLINE</span>
+      </div>
+      <div class="footer-right">
+        <span id="input-status">WEBGL</span><i></i><span>BUILD 2.0</span>
+      </div>
+    </footer>
+    <script type="module" src="../src/main.js"></script>
+  </body>
+</html>

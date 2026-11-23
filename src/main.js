@@ -548,11 +548,15 @@ try {
   })
   syncSettings(false)
   updateInputMode(inputMode)
+  $('#system-status').textContent = 'SYSTEM ONLINE'
+  $('#begin').disabled = false
 } catch (e) {
   console.error(e)
   $('#load-error').hidden = false
   $('#load-error').textContent =
     'The 3D view needs WebGL 2. Enable hardware acceleration in your browser and reload.'
-  $('#begin').disabled = true
   $('#system-status').textContent = 'FEED OFFLINE'
 }
+$('#begin-label').textContent = 'Enter level'
+$('#settings').disabled = false
+$('#controls').disabled = false

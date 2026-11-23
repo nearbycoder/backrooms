@@ -870,6 +870,15 @@ dialog video {
   }
 }
 @media (max-width: 22rem) {
+  .masthead-inner {
+    gap: 0.45rem;
+  }
+  .masthead .brand {
+    font-size: 1.05rem;
+  }
+  .masthead .nav-play svg {
+    display: none;
+  }
   .hero-actions {
     align-items: flex-start;
     flex-direction: column;
